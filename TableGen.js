@@ -7,6 +7,7 @@
 export function createTableAuto(id,list){
     let table=document.createElement("table");
    table.classList.add("table")
+   table.setAttribute("id","table")
     for(let obj of list){
       table.appendChild( row(obj))
     }
@@ -47,3 +48,12 @@ export function row (obj){
 return row;
 }
 
+export async function reCreateTable(parentid, tableid, data){
+    //remove current element
+let element=document.getElementById(tableid);
+element.remove()
+console.log(data)
+createTableAuto(parentid,data)
+
+   
+}

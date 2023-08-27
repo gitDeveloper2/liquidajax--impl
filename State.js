@@ -2,9 +2,16 @@
 // we need to give it access to http data to get the data and store it and also to update the elements ...update ajax
 export const hello="hey";
 export  let State={
+    fxns:[]
 
 };
 
+export function addFxn(fxnname, fxn){
+    getState()[""+fxnname+""]=fxn;
+}
+export function removeFxn(fxnname){
+    delete getState()[""+fxnname+""]
+}
 export function getState(){
     return State;
 }
@@ -16,26 +23,27 @@ export function setState(state){
 export function addStateObject(name,value){
     State[""+name+""]=value;
 }
-export function removeStateObject(name,value){
+export function removeStateObject(name){
     if(checkIfPropExists(name)){
 
-
+     delete State[""+name+""]
     }else{
         throw Error("Key does not exist")
     }
 }
-export async function alterStateObject(name,value){
+export  function alterStateObject(name,value){
     console.log("prev state")
     console.log(getState())
    if(checkIfPropExists(name)){
-    let previousStateValue= await getState()[""+name+""]
+    let previousStateValue=  getState()[""+name+""]
     if(previousStateValue instanceof Array){
+        console.log("an array")
         State[""+name+""]= [...previousStateValue,value] ;
         console.log("altered state")
         console.log(getState())
 
     }else{
-        State[""+name+""]= await value;
+        State[""+name+""]=  value;
         console.log("altered state")
         console.log( getState())
     }
