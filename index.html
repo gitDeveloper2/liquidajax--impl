@@ -15,32 +15,33 @@
 import * as state from "./State.js" 
 import * as t from "./TableGen.js" 
 let users=[{name:"alex",age:21,town:"kuwait"},{name:"dunya",age:23,town:"dunya"}]
-state.addStateObject("users", users)
+state.addStateObject("users", users).then((response)=>{
+})
 
-t.createTableAuto("body",state.getState().users)
+state.getState().then((response)=>{
+    t.createTableAuto("body",response.users)
+
+})
+ 
+
 
 setTimeout(() => {
     callasyncFunction("kim")
     
-}, 3000);
-
-// setTimeout(() => {
-//     callasyncFunction("ted")
+}, 1000);
+setTimeout(() => {
+    callasyncFunction("peter")
     
-// }, 4000);
+}, 2000);
 
-// setTimeout(() => {
-//     callasyncFunction("hp")
-    
-// }, 5000);
+
 async function callasyncFunction(user){
     await state.removeStateObject('users')
    
 await state.addStateObject("users",[{name:user,age:21,town:"kuwait"}])
 
 // recrete table
-t.reCreateTable("body","table",state.getState().users)
-console.log(state.getState())
+t.reCreateTable("body","table",(await state.getState()).users)
 
 }
 

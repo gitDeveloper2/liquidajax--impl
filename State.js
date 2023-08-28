@@ -13,45 +13,68 @@ export function removeFxn(fxnname){
     delete getState()[""+fxnname+""]
 }
 export function getState(){
-    return State;
+    return new Promise((resolve)=>{
+        resolve(State)
+    })
+    
 }
 
 export function setState(state){
-    State=state;
+    return new Promise((resolve)=>{
+        State=state;
+        resolve("set")
+    })
+    
 }
 
 export function addStateObject(name,value){
-    State[""+name+""]=value;
+    return new Promise((resolve)=>{
+        State[""+name+""]=value;
+        resolve(State)
+    })
+    
 }
 export function removeStateObject(name){
-    if(checkIfPropExists(name)){
+    return new Promise((resolve,reject)=>{
+        if(checkIfPropExists(name)){
 
-     delete State[""+name+""]
-    }else{
-        throw Error("Key does not exist")
-    }
+            delete State[""+name+""]
+            return resolve("removed")
+           }else{
+            //    throw Error("Key does not exist")
+               return reject("Key does not exist")
+           }
+    })
+  
 }
 export  function alterStateObject(name,value){
-    console.log("prev state")
-    console.log(getState())
-   if(checkIfPropExists(name)){
-    let previousStateValue=  getState()[""+name+""]
-    if(previousStateValue instanceof Array){
-        console.log("an array")
-        State[""+name+""]= [...previousStateValue,value] ;
-        console.log("altered state")
+
+    return new Promise((resolve,reject)=>{
+        console.log("prev state")
         console.log(getState())
-
+       if(checkIfPropExists(name)){
+        let previousStateValue=  getState()[""+name+""]
+        if(previousStateValue instanceof Array){
+            console.log("an array")
+            State[""+name+""]= [...previousStateValue,value] ;
+            console.log("altered state")
+            console.log(getState())
+            return resolve("Altered")
+    
+        }else{
+            State[""+name+""]=  value;
+            console.log("altered state")
+            console.log( getState())
+            return resolve("Altered")
+        }
+    
+       
     }else{
-        State[""+name+""]=  value;
-        console.log("altered state")
-        console.log( getState())
+        
+        reject("Key does not exist")
     }
-
+    })
    
-}else{
-    throw Error("Key does not exist")
-}
 }
 
 export function checkIfPropExists(search){
