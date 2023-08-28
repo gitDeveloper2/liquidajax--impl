@@ -1,7 +1,30 @@
+import * as state from "./State.js" 
 // interface to implement the methods
 // we have also the replace html
 
+export function createTableAutoFromState(parentid, tableid){
+// remove element if exists
+let element=document.getElementById(tableid);
+if(element !=null){
+    element.remove()
+}
 
+
+
+    let table=document.createElement("table");
+   table.classList.add("table")
+   table.setAttribute("id",tableid)
+   state.getState().then((response)=>{
+    for(let obj of response.users ){
+        table.appendChild( row(obj))
+        parent=document.getElementById(parentid);
+        parent.appendChild(table)
+      }
+   })
+   
+  
+   
+   }
 
 
 export function createTableAuto(id,list){
@@ -48,12 +71,3 @@ export function row (obj){
 return row;
 }
 
-export async function reCreateTable(parentid, tableid, data){
-    //remove current element
-let element=document.getElementById(tableid);
-element.remove()
-console.log(data)
-createTableAuto(parentid,data)
-
-   
-}

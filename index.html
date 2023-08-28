@@ -11,40 +11,7 @@
     <title>Document</title>
 </head>
 <body id="body" >
-<script type="module">
-import * as state from "./State.js" 
-import * as t from "./TableGen.js" 
-let users=[{name:"alex",age:21,town:"kuwait"},{name:"dunya",age:23,town:"dunya"}]
-state.addStateObject("users", users).then((response)=>{
-})
-
-state.getState().then((response)=>{
-    t.createTableAuto("body",response.users)
-
-})
- 
-
-
-setTimeout(() => {
-    callasyncFunction("kim")
-    
-}, 1000);
-setTimeout(() => {
-    callasyncFunction("peter")
-    
-}, 2000);
-
-
-async function callasyncFunction(user){
-    await state.removeStateObject('users')
-   
-await state.addStateObject("users",[{name:user,age:21,town:"kuwait"}])
-
-// recrete table
-t.reCreateTable("body","table",(await state.getState()).users)
-
-}
-
+<script type="module" src="./index.js">
 </script>
 </body>
 </html>

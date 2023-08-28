@@ -2,7 +2,7 @@
 // we need to give it access to http data to get the data and store it and also to update the elements ...update ajax
 export const hello="hey";
 export  let State={
-    fxns:[]
+    recreatorFxns:[{}]
 
 };
 
@@ -13,7 +13,11 @@ export function removeFxn(fxnname){
     delete getState()[""+fxnname+""]
 }
 export function getState(){
+// it should take a recreator fxn and the fxn should require no paramter but state slice and recreate from that
+// each slice must have its own recreators
+
     return new Promise((resolve)=>{
+        console.log(State)
         resolve(State)
     })
     
@@ -22,14 +26,33 @@ export function getState(){
 export function setState(state){
     return new Promise((resolve)=>{
         State=state;
-        resolve("set")
     })
     
 }
 
-export function addStateObject(name,value){
+export function update(fxnname){
+    for(let elem of State.recreatorFxns){
+        for(let prop in elem){
+            if(elem[prop]==fxnname){
+                console.log(elem)
+                elem.fxn(elem.param[0],elem.param[1])
+
+            }
+        }
+    }
+
+}
+
+export function addStateObject(name,value,fxnname,cb,params){
+    console.log(params)
     return new Promise((resolve)=>{
         State[""+name+""]=value;
+        if( fxnname!=null &&!checkIfFxnExists(fxnname)){
+        State.recreatorFxns=[{
+            fxnName:fxnname,
+            fxn:cb,
+            param:params
+        }]}
         resolve(State)
     })
     
@@ -83,5 +106,21 @@ export function checkIfPropExists(search){
         if(prop==search) return true
     } return false;
 }
+export function checkIfFxnExists(search){
+   
+    
+    for(let elem of State.recreatorFxns){
+        
+        for(let prop in elem){
+            // console.log(elem[prop])
+            if(elem[prop]==search) {
+                console.log(prop)
+                return true}
+        
+    }}
+    return false;
+    
+}
+
 
 

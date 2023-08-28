@@ -1,13 +1,42 @@
-// interface to implement the methods
-// we have also the replace html
-// let o=[{name:"alex",age:21,town:"kuwait"},{name:"dunya",age:23,town:"dunya"}]
+import * as state from "./State.js" 
+import * as t from "./TableGen.js" 
+let users=[{name:"alex",age:21,town:"kuwait"},{name:"dunya",age:23,town:"dunya"}]
 
-// shouldnt access data directly. it should call update 
-// state and then read or state should update functions subscribed to it
-// incase of ajax
+state.addStateObject("users", users,"users", t.createTableAutoFromState,["body","table"]).then((response)=>{
+})
 
-// call your functions as usual if.e ajax
-//  but on return dont update anthing. simply add the data to state and the rest will be handled for you
-import {hello} from "./State" 
+state.getState().then((response)=>{
+    t.createTableAutoFromState("body","table")
+
+})
 
 
+ 
+
+
+setTimeout(() => {
+    callasyncFunction("kim")
+    
+}, 1000);
+
+
+
+setTimeout(() => {
+    state.addStateObject("users", [{name:"jacskon",age:21,town:"kuwait"}])
+.then((response)=>{
+})
+    state.update("users")
+}, 3000);
+
+
+
+
+async function callasyncFunction(user){
+    await state.removeStateObject('users')
+   
+await state.addStateObject("users",[{name:user,age:21,town:"kuwait"}])
+
+// recrete table
+state.update("users")
+
+}
