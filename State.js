@@ -1,6 +1,6 @@
 // state class
 // we need to give it access to http data to get the data and store it and also to update the elements ...update ajax
-export const hello="hey";
+
 export  let State={
     recreatorFxns:[{}]
 

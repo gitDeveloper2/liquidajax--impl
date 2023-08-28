@@ -10,10 +10,6 @@ state.getState().then((response)=>{
 
 })
 
-
- 
-
-
 setTimeout(() => {
     callasyncFunction("kim")
     

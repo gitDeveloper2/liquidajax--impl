@@ -25,30 +25,6 @@ if(element !=null){
   
    
    }
-
-
-export function createTableAuto(id,list){
-    let table=document.createElement("table");
-   table.classList.add("table")
-   table.setAttribute("id","table")
-    for(let obj of list){
-      table.appendChild( row(obj))
-    }
-   parent=document.getElementById(id);
-   parent.appendChild(table)
-   
-   }
-
-export function createTable(id){
- let table=document.createElement("table");
-
-   table.appendChild( tr())
-
-parent=document.getElementById(id);
-parent.appendChild(table)
-
-}
-
 export function td (data){
     let td=document.createElement("td");
     td.innerHTML=data;
